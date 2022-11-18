@@ -1,7 +1,6 @@
 package com.example.movieapplication.api
 
-import com.example.movieapplication.data.Movie_Data
-import com.example.movieapplication.utility.Constant.Companion.BASE_URL
+import com.example.movieapplication.repository.utility.Constant.Companion.BASE_URL
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -14,8 +13,8 @@ object RetrofitInstance {
             .build()
     }
 
-    val api : Movie_ApiCall by lazy {
-        retrofit.create(Movie_ApiCall::class.java)
+    val api : MovieApiCall by lazy {
+        retrofit.create(MovieApiCall::class.java)
     }
 
 }

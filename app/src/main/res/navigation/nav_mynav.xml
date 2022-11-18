@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragmentMain"
-        android:name="com.example.movieapplication.fragment.FragmentMain"
+        android:name="com.example.movieapplication.fragment.MainPageFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main" >
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/favourite_List"
-        android:name="com.example.movieapplication.fragment.Favourite_List"
+        android:name="com.example.movieapplication.fragment.FavouriteMovieFragment"
         android:label="fragment_favourite__list"
         tools:layout="@layout/fragment_favourite__list" >
         <action

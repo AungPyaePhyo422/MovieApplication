@@ -6,18 +6,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.movieapplication.DataBase.MovieDatabase
 import com.example.movieapplication.data.MovieRoomDB
-import com.example.movieapplication.repository.Movie_Database_Repository
-import com.example.movieapplication.repository.Movie_Repository
+import com.example.movieapplication.repository.MovieDatabaseRepository
 import kotlinx.coroutines.launch
 
-class Movie_DB_ViewModel(application: Application) : AndroidViewModel(application) {
+class MovieDbViewModel(application: Application) : AndroidViewModel(application) {
 
     val readAllData : LiveData<List<MovieRoomDB>>
-    private val repository : Movie_Database_Repository
+    private val repository : MovieDatabaseRepository
 
     init {
         val userDao = MovieDatabase.getDatabase(application).movieDao()
-        repository = Movie_Database_Repository(userDao)
+        repository = MovieDatabaseRepository(userDao)
         readAllData = repository.readAllData
     }
 

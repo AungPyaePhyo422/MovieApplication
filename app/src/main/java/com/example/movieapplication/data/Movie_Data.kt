@@ -1,4 +1,7 @@
-package com.example.movieapplication.data.popular
+package com.example.movieapplication.data
+
+import com.example.movieapplication.data.popular.Dates
+import com.example.movieapplication.data.popular.Result
 
 data class Movie_Data(
     val dates: Dates,

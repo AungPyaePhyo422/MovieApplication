@@ -1,4 +1,4 @@
-package com.example.movieapplication.data
+package com.example.movieapplication.data.popular
 
 data class Result(
     val adult: Boolean,

@@ -8,7 +8,6 @@
     android:layout_height="140dp">
 
     <LinearLayout
-        android:id="@+id/lLayout_item"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">

@@ -3,12 +3,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bgg"
-    tools:context=".fragment.FragmentMain">
+    android:background="@drawable/bg_mainbackground"
+    tools:context=".fragment.MainPageFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_main"
+
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:fadeScrollbars="true"
+        android:scrollbarSize="3dp">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Up Coming Movies"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_upcoming_movie"
+                android:layout_width="match_parent"
+                tools:itemCount="20"
+                android:scaleX="1"
+                tools:listitem="@layout/item_upcoming"
+                android:layout_height="230dp"/>
+
+            <TextView
+                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:text="Popular Movies"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_popular_movie"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
+                android:scrollbars="none"/>
+
+        </TableLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

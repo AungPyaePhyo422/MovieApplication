@@ -5,7 +5,7 @@ import com.example.movieapplication.data.forupcoming.Upcoming
 import com.example.movieapplication.data.Movie_Data
 import retrofit2.Response
 
-class Movie_Repository {
+class MovieRepository {
 
     suspend fun getMovieData() : Response<Movie_Data>{
         return RetrofitInstance.api.getMovieData()

@@ -9,17 +9,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.movieapplication.Adapter.Fav_Movie_Adapter
-import com.example.movieapplication.Adapter.Movie_Adapter
+import com.example.movieapplication.Adapter.*
 import com.example.movieapplication.R
 import com.example.movieapplication.databinding.FragmentMainBinding
-import com.example.movieapplication.repository.Movie_Repository
-import com.example.movieapplication.viewmodel.Movie_ViewModel
+import com.example.movieapplication.repository.MovieRepository
+import com.example.movieapplication.viewmodel.MovieViewModel
 import com.example.movieapplication.viewmodel.MyViewModelFactory
 
-class FragmentMain : Fragment() {
+class MainPageFragment : Fragment() {
 
     private lateinit var binding : FragmentMainBinding
+    private lateinit var upcomingMovieAdapter: UpcomingMovieAdapter
+    private lateinit var popularMovieAdapter : PopularMovieAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,37 +29,34 @@ class FragmentMain : Fragment() {
         // Inflate the layout for this fragment
         binding =  FragmentMainBinding.inflate(inflater, container, false)
 
-        val movie_adapter : Movie_Adapter? = context?.let { Movie_Adapter(it) }
-        val movie_adapter_fav : Fav_Movie_Adapter? = context?.let { Fav_Movie_Adapter(it) }
+        upcomingMovieAdapter = UpcomingMovieAdapter()
+        popularMovieAdapter = PopularMovieAdapter()
 
-        val repository = Movie_Repository()
+        val repository = MovieRepository()
         val viewModelFactory = MyViewModelFactory(repository)
-        val viewModel = ViewModelProvider(this, viewModelFactory).get(Movie_ViewModel::class.java)
+        val viewModel = ViewModelProvider(this, viewModelFactory)[MovieViewModel::class.java]
 
         viewModel.getMovieData()
-
-        binding.rvMain.apply {
-            layoutManager = LinearLayoutManager(context)
-            setHasFixedSize(true)
-            adapter = movie_adapter
-        }
-
-        viewModel.MyMovieData.observe(viewLifecycleOwner, Observer {
-            movie_adapter?.submitList(it.body()?.results)
-            Toast.makeText(context, "${it}", Toast.LENGTH_SHORT).show()
-            Log.d("Testing", it.body().toString())
-        })
-
         viewModel.getPopularMovieData()
 
-        binding.rvMainFav.apply {
+        binding.rvUpcomingMovie.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             setHasFixedSize(true)
-            adapter = movie_adapter_fav
+            adapter = upcomingMovieAdapter
         }
 
         viewModel.MyPopularMovieData.observe(viewLifecycleOwner, Observer {
-            movie_adapter_fav?.submitList(it.body()?.results)
+            upcomingMovieAdapter.submitList(it.body()?.results)
+        })
+
+        binding.rvPopularMovie.apply {
+            layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
+            adapter = popularMovieAdapter
+        }
+
+        viewModel.MyMovieData.observe(viewLifecycleOwner, Observer {
+            popularMovieAdapter.submitList(it.body()?.results)
         })
 
 

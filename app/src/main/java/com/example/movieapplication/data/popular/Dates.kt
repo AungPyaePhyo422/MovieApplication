@@ -1,4 +1,4 @@
-package com.example.movieapplication.data
+package com.example.movieapplication.data.popular
 
 data class Dates(
     val maximum: String,

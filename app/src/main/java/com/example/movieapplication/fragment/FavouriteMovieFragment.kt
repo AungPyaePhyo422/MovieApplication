@@ -9,15 +9,14 @@ import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.movieapplication.Adapter.Movie_Fav_DBAdapter
-import com.example.movieapplication.R
+import com.example.movieapplication.Adapter.FavouriteMovieAdapter
 import com.example.movieapplication.databinding.FragmentFavouriteListBinding
-import com.example.movieapplication.viewmodel.Movie_DB_ViewModel
+import com.example.movieapplication.viewmodel.MovieDbViewModel
 
-class Favourite_List : Fragment() {
+class FavouriteMovieFragment : Fragment() {
 
-    private lateinit var adapterFl : Movie_Fav_DBAdapter
-    private lateinit var movieDbViewmodel: Movie_DB_ViewModel
+    private lateinit var favouriteMoiveAdapter : FavouriteMovieAdapter
+    private lateinit var movieDbViewModel: MovieDbViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,20 +25,19 @@ class Favourite_List : Fragment() {
         // Inflate the layout for this fragment
         val binding = FragmentFavouriteListBinding.inflate(inflater, container, false)
 
-        movieDbViewmodel = ViewModelProvider(this).get(Movie_DB_ViewModel::class.java)
-        adapterFl = Movie_Fav_DBAdapter(this)
+        movieDbViewModel = ViewModelProvider(this)[MovieDbViewModel::class.java]
+        favouriteMoiveAdapter = FavouriteMovieAdapter(this)
 
-        binding.rvFavList.apply {
+        binding.rvFavouriteList.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
-            adapter = adapterFl
+            adapter = favouriteMoiveAdapter
         }
 
-        movieDbViewmodel.readAllData.observe(viewLifecycleOwner, Observer {
+        movieDbViewModel.readAllData.observe(viewLifecycleOwner, Observer {
             Log.d("AdapterTest", it.toString())
-            adapterFl.submitList(it)
+            favouriteMoiveAdapter.submitList(it)
         })
-
 
         return binding.root
     }

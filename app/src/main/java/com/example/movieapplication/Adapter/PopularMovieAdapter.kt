@@ -10,22 +10,22 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.movieapplication.data.popular.Result
-import com.example.movieapplication.databinding.ItemBinding
-import com.example.movieapplication.fragment.FragmentMainDirections
+import com.example.movieapplication.databinding.ItemPopularBinding
+import com.example.movieapplication.fragment.MainPageFragmentDirections
 import com.example.movieapplication.repository.utility.Constant.Companion.BASE_IMAGE_URL
 
-class Movie_Adapter(private val context: Context) : ListAdapter<Result, Movie_Adapter.MovieViewHolder>(DiffCall) {
+class PopularMovieAdapter : ListAdapter<Result, PopularMovieAdapter.MovieViewHolder>(DiffCall) {
 
-    class MovieViewHolder(private val binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MovieViewHolder(private val binding: ItemPopularBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(result : Result){
             Glide.with(itemView).load(BASE_IMAGE_URL+result.poster_path).into(binding.ivPosterItem)
             binding.tvMovieNameItem.text = result.original_title
 
         }
-        fun MovieonClick(result: Result){
+        fun movieClick(result: Result){
             itemView.setOnClickListener(View.OnClickListener {
-                val action = FragmentMainDirections.actionFragmentMainToDetailShowFragment(result.title, result.poster_path, result.overview)
+                val action = MainPageFragmentDirections.actionFragmentMainToDetailShowFragment(result.title, result.poster_path, result.overview)
                 Navigation.findNavController(binding.root).navigate(action)
             })
         }
@@ -33,14 +33,14 @@ class Movie_Adapter(private val context: Context) : ListAdapter<Result, Movie_Ad
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val view = ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val view = ItemPopularBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MovieViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val getPosition = getItem(position)
         holder.bind(getPosition)
-        holder.MovieonClick(getPosition)
+        holder.movieClick(getPosition)
 
 
     }

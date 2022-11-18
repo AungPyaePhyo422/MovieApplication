@@ -1,65 +1,58 @@
 package com.example.movieapplication.Adapter
 
-import android.app.Application
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.movieapplication.data.MovieRoomDB
-import com.example.movieapplication.databinding.SavedFavItemBinding
-import com.example.movieapplication.fragment.DetailShowFragment
+import com.example.movieapplication.data.forupcoming.Result
+import com.example.movieapplication.databinding.ItemUpcomingBinding
+import com.example.movieapplication.fragment.MainPageFragmentDirections
 import com.example.movieapplication.repository.utility.Constant.Companion.BASE_IMAGE_URL
-import com.example.movieapplication.viewmodel.Movie_DB_ViewModel
 
-class Movie_Fav_DBAdapter(private val viewModelStoreOwner: ViewModelStoreOwner) : ListAdapter<MovieRoomDB, Movie_Fav_DBAdapter.MovieViewHolder>(DiffCallDB) {
+class UpcomingMovieAdapter : ListAdapter<com.example.movieapplication.data.forupcoming.Result, UpcomingMovieAdapter.MovieViewHolder>(DiffCallUpcoming) {
 
 
-    class MovieViewHolder(private val binding : SavedFavItemBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(movieRoomDB: MovieRoomDB){
-            Glide.with(itemView).load(movieRoomDB.image).into(binding.ivPosterItem)
-            binding.tvMovieNameItem.text = movieRoomDB.title
+    class MovieViewHolder(private val binding : ItemUpcomingBinding) : RecyclerView.ViewHolder(binding.root){
+        fun bind(result: com.example.movieapplication.data.forupcoming.Result){
+            Glide.with(itemView).load(BASE_IMAGE_URL+result.poster_path).into(binding.ivPosterUpcomingItem)
+            binding.tvMovieNameUpcomingItem.text = result.original_name
         }
-
-        fun delete(movieRoomDB: MovieRoomDB, viewModelStoreOwner: ViewModelStoreOwner){
-            val movieDbViewmodel : Movie_DB_ViewModel = ViewModelProvider(viewModelStoreOwner).get(Movie_DB_ViewModel::class.java)
-            binding.ivRemove.setOnClickListener(View.OnClickListener {
-                movieDbViewmodel.deleteMovie(movieRoomDB)
+        fun movieClick(result: com.example.movieapplication.data.forupcoming.Result) {
+            itemView.setOnClickListener(View.OnClickListener {
+                val action = MainPageFragmentDirections.actionFragmentMainToDetailShowFragment(result.original_name, result.poster_path, result.overview)
+                Navigation.findNavController(binding.root).navigate(action)
             })
         }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val view = SavedFavItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val view = ItemUpcomingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MovieViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val currentItem = getItem(position)
         holder.bind(currentItem)
-        holder.delete(currentItem, viewModelStoreOwner)
+        holder.movieClick(currentItem)
 
 
     }
 }
 
-object DiffCallDB : DiffUtil.ItemCallback<MovieRoomDB>() {
-    override fun areItemsTheSame(oldItem: MovieRoomDB, newItem: MovieRoomDB): Boolean {
+object DiffCallUpcoming : DiffUtil.ItemCallback<com.example.movieapplication.data.forupcoming.Result>() {
+
+    override fun areItemsTheSame(oldItem: Result, newItem: Result): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: MovieRoomDB, newItem: MovieRoomDB): Boolean {
+    override fun areContentsTheSame(oldItem: Result, newItem: Result): Boolean {
         return areItemsTheSame(oldItem, newItem)
     }
-
 
 }

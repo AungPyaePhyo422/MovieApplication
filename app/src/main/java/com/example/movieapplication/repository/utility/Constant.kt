@@ -1,4 +1,4 @@
-package com.example.movieapplication.utility
+package com.example.movieapplication.repository.utility
 
 class Constant {
 
