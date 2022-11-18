@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mynav"
+    app:startDestination="@id/fragmentMain">
+
+    <fragment
+        android:id="@+id/fragmentMain"
+        android:name="com.example.movieapplication.fragment.FragmentMain"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_fragmentMain_to_detailShowFragment"
+            app:destination="@id/detailShowFragment" />
+        <action
+            android:id="@+id/action_fragmentMain_to_favourite_List"
+            app:destination="@id/favourite_List" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailShowFragment"
+        android:name="com.example.movieapplication.fragment.DetailShowFragment"
+        android:label="fragment_detail_show"
+        tools:layout="@layout/fragment_detail_show" >
+        <action
+            android:id="@+id/action_detailShowFragment_to_fragmentMain"
+            app:destination="@id/fragmentMain" />
+        <argument
+            android:name="name"
+            app:argType="string" />
+        <argument
+            android:name="url"
+            app:argType="string" />
+        <argument
+            android:name="overview"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/favourite_List"
+        android:name="com.example.movieapplication.fragment.Favourite_List"
+        android:label="fragment_favourite__list"
+        tools:layout="@layout/fragment_favourite__list" >
+        <action
+            android:id="@+id/action_favourite_List_to_fragmentMain"
+            app:destination="@id/fragmentMain" />
+    </fragment>
+</navigation>

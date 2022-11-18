@@ -1,7 +1,6 @@
-package com.example.movieapplication.data.popular
+package com.example.movieapplication.data.forupcoming
 
-data class Movie_Data(
-    val dates: Dates,
+data class Upcoming(
     val page: Int,
     val results: List<Result>,
     val total_pages: Int,
